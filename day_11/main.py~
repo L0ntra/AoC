@@ -1,0 +1,56 @@
+def incriment_pword(pword):
+  length = len(pword)-1
+  new_char = chr(ord(pword[length])+1)
+  if new_char > 'z':
+    new_char = 'a'
+    if length > 0:
+      pword = incriment_pword(pword[:length]) + new_char
+    else:
+      pword = new_char
+  else:
+    pword = pword[:length] + new_char
+  return pword
+
+def straight_check(p):
+  length = len(p)
+  for i in range(2, length):
+    if chr(ord(p[i-2]) + 2) == p[i] and chr(ord(p[i-1])+1) == p[i]:
+#      print(p[i-2:i+1])
+      return True
+  return False
+
+def bad_letters(password):
+  for i in range(len(password)):
+    if password[i] == 'i' or password[i] == 'o' or password[i] == 'l':
+      return False
+  return True
+
+def double_set(p):
+  length = len(p)
+  found = 0
+  pair = []
+  for i in range(1, length):
+    if p[i-1] == p[i]:
+      pair += [p[i-1:i]]
+      i += 1
+  length = len(pair)
+  if length < 2:
+    return False
+  match = 0
+  for i in range(length):
+    for j in range(length):
+      if pair[i] == pair[j]:
+        match += 1
+    if match > 1:
+      return False
+    match = 0
+  return True
+
+
+
+  return True
+password = 'vzbxkghb'
+for x in range(2):
+  while not (bad_letters(password) and straight_check(password) and double_set(password)):
+    password = incriment_pword(password)
+  print(password)
